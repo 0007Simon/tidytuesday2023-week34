@@ -1,0 +1,74 @@
+---
+title: "R Notebook"
+author: Eli0007
+output: html_notebook
+---
+ 
+
+```{r}
+install.packages("tidytuesdayR")
+library(tidyverse, pacman)
+library("tidytuesdayR")
+
+```
+
+```{r}
+
+
+df <- tidytuesdayR::tt_load("2023-08-22")
+pop <- df$population
+pop
+View(pop)
+
+
+```
+
+```{r}
+summmary(pop)
+glimpse(pop)
+
+```
+
+```{r}
+pop1 <-  pop[,c(1,5,6, 8)]
+df <-  pop1 %>%  group_by(year, coa_name, coa) %>% summarise_each(funs(sum))
+View(df)
+
+df <-  pop1 %>%  group_by(year, coa_name, coa) %>% summarise_each(funs(sum))
+
+df3 <-  df %>%  group_by(year) %>% top_n(3, refugees) %>% ungroup()
+
+
+
+```
+
+
+
+```{r}
+
+
+
+df3 %>% ggplot(aes(x = year, y = refugees, fill = coa)) + geom_bar(position = "stack", stat = "identity") + coord_flip() + scale_color_brewer(palette = "PiYG") + theme_classic() + labs(title = "Our doors are open", subtitle  = "Pakistan (2010 - 2013) and Turkey(2014 - present) dominate the charts for most refugees taken in in the recent decade", x = "Years", y = "Refugees taken in") + theme(panel.background = element_rect(fill = "#eef1f4", color = "#eef1f4"), plot.background = element_rect(fill = "#eef1f4"), legend.background = element_rect(fill = "#eef1f4"))
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
